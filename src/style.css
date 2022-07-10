@@ -17,12 +17,12 @@ header{
   font-weight: bold;
   text-decoration: underline;
 }
-#input{
+#game-controller{
   margin-top: 10px;
   background-color: lightgrey;
   display: flex;
 }
-#input button{
+#game-controller button{
   flex: 1;
   margin:2px;
   padding: 4px;
@@ -33,7 +33,15 @@ header{
 .playGround{
   background-color: whitesmoke;
 }
+.card-container{
+  margin-top: 20px;
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+}
+  
 img{
+  margin:10px;
   width: 100px;
-  height: 100px;
+  height: 100px;  
 }
