@@ -1,62 +1,91 @@
-// TODO eredményjelző kiirása
-// gombok deklarálása
-// kockák cserélye
-// játéktér frissitése, kockák kezelése
-
-// ez mutatja meg hogy egy színből hány kocka van.
-let green = 6;
-let yellow = 4;
-let red = 3;
-const colors = ["R", "Y", "G"];
-
-// ezek mutatják meg hogy az egyes színeken milyen szinbólum található
-const g = ["B", "B", "B", "S", "R", "R"];
-const y = ["B", "B", "S", "S", "R", "R"];
-const r = ["B", "S", "S", "S", "R", "R"];
-// ezek fognak megjelenni a Stat mezőben 
-let your_score = 0;
-let player_score = 0;
-let your_shot = 0;
-let player_shot = 0;
-let your_ran = 0;
-let player_ran = 0;
+// TODO 
+// kocka húzás => kirakás, pontbeírása
+// lövés, futás kezelése
+// gombok kezelése
+//  pulled [] ot átalakítani ugy hogy a lábakat beleszamitsa
 
 
-function hitLuck() {
-  // kihúz 3-at a zsákból
-  for (let i = 0; i < 3; i++) {
-    pullCube();
-  }
+// a zsákban 13 kocka van, 3 szinben, 6 zöld,4 sárga, 3 piros
+// a bag tömböt feltöltöm véletlenszerűen
+let bag = ["G", "G", "G", "Y", "Y", "G", "R", "Y", "Y", "R", "G", "G", "R"];
+const colors = ["G", "Y", "R"];
 
-}
+// az egyes színeken, milyen szimGólumok vannak.
+const green = ["B", "B", "B", "R", "R", "S"];
+const yellow = ["B", "B", "R", "R", "S", "S"];
+const red = ["B", "R", "R", "S", "S", "S"];
+let symbol = "";
+let pulled_dice = 0;
+let pulled = [];
 
-function pullCube() {
-  let imgCard = document.createElement("img");
-  // ez a változó adja meg hogy milyen szinű a kocka
-  let n = Math.floor(Math.random() * 3);
-  // ezzel a változóval lehet majd szinekn belül, szimbólumot kapni
-  let k = Math.floor(Math.random() * 5);
+
+
+function pullDice() {
+  // szinek alapján, melyik szmbólum legyen
+  let k = Math.floor(Math.random() * 6);
+  // ez a változó adja meg hogy melyik szín legyen
+  let n = Math.floor(Math.random() * 13);
+  let img_dice = document.createElement("img");
+  img_dice.setAttribute("id", "imgDice");
   let card = "";
 
-  if (colors[n] == "G" && green != 0) {
-    green -= 1;
-    card = colors[n] + "-" + g[k];
+  if (bag[n] == "G") {
+    card = bag[n] + "-" + green[k];
+    pulled.push(bag[n]);
+    bag.splice(n, 1);
   }
-  else if (colors[n] == "Y" && yellow != 0) {
-    yellow -= 1;
-    card = colors[n] + "-" + y[k];
+  else if (bag[n] == "Y") {
+    card = bag[n] + "-" + yellow[k];
+    pulled.push(bag[n]);
+    bag.splice(n, 1);
   }
-  else if (colors[n] == "R" && red != 0) {
-    red -= 1;
-    card = colors[n] + "-" + r[k];
+  else if (bag[n] == "R") {
+    card = bag[n] + "-" + red[k];
+    pulled.push(bag[n]);
+    bag.splice(n, 1);
   }
   else {
     return;
   }
-  imgCard.src = "../img/dices/" + card + ".jpg";
-  document.getElementById("card-container").appendChild(imgCard);
+  console.log(card);
+  img_dice.src = "../img/dices/" + card + ".jpg";
+  document.getElementById("card-container").appendChild(img_dice);
 }
 
-console.log(green + " green");
-console.log(yellow + " yellow");
-console.log(red + " red");
+function hitLuck() {
+  for (let i = 0; i < 4; i++) {
+    pullDice();
+  }
+  console.log(bag);
+  console.log(pulled);
+}
+
+// function Stay() {
+//   const delete = document.getElementById("imgDice");
+//   delete.remove();
+// }
+
+function writeStat() {
+
+}
+
+function gameRule() {
+
+}
+
+function updateHand() {
+
+}
+
+// let bag = ["G", "G", "G", "G", "G", "G", "Y", "Y", "Y", "Y", "R", "R", "R"];
+// let n = Math.floor(Math.random() * 13);
+// let pulled = [];
+
+// console.log(n);
+
+// function hitLuck() {
+//   pulled.push(bag[n]);
+//   bag.splice(n, 1);
+//   console.log(bag);
+//   console.log(pulled);
+// }
