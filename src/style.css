@@ -1,48 +1,65 @@
+/* *{
+  border: 2px solid yellow;
+} */
+
 body{
-  background-color: white;
-  line-height: 10px;
+  background: rgb(250,19,19);
+background: linear-gradient(0deg, rgba(250,19,19,1) 0%, rgba(71,13,13,1) 79%);
+background-repeat: no-repeat;
+background-attachment:fixed;
+color: white;
+text-align: center;
 }
-header{
-  background-color: darkred;
+
+.brains, .shotgun{
+  text-align: start;
+}
+
+.playground-area{
+  display: block;
+}
+
+.buttons{
+  display: flex;
   width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  color: white;
-  border-radius: 2px;
 }
-.stat{
-  margin: 0 20px 0 20px;
-}
-.stat h3{
-  font-weight: bold;
-  text-decoration: underline;
-}
-#game-controller{
-  margin-top: 10px;
-  background-color: lightgrey;
-  display: flex;
-}
-#game-controller button{
+
+button{
   flex: 1;
-  margin:2px;
-  padding: 4px;
-  font-size: larger;
-  font-weight: bold;
+  font-size: 20px;
   cursor: pointer;
+  margin: 10px 2px;
+  padding: 5px 3px;
 }
-.playGround{
-  background-color: whitesmoke;
+
+.dice-area{
+  display: block;
+  width: 100%;
+  height: 110px;
 }
-.card-container{
-  margin-top: 20px;
-  height: 150px;
+
+.dice-img{
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height:80px;
 }
-  
+
 img{
-  margin:10px;
-  width: 100px;
-  height: 100px;  
+
+  width: 50px;
+  height: 50px;
 }
+
+.pulled-dice{
+  display: inline;
+  width: 100%;
+  height: 30px;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.pulled-dice > img(
+  width:20px;
+  height:20px;
+)

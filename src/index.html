@@ -10,27 +10,24 @@
 </head>
 
 <body>
-    <header>
+    <div class="game-resut">
+        <h2>Your stat</h2>
+        <p class="brains">Your brains: </p>
+        <p class="shotgun">Your shotgun: </p>
+    </div>
 
-        <div id="your-stat" class="stat">
-            <h3>Your Stat</h3>
-            <p id="brains-score"> </p>
-            <p id="shot-score"></p>
+    <div class="playground-area">
+
+        <div class="buttons">
+            <button onclick="pushLuck()">Push your luck!</button>
+            <button>Stay!</button>
         </div>
-        <div id="player-stat" class="stat">
-            <h3>Player Stat</h3>
+
+        <div id="dice-area" class="dice-area">
+            <div id="dice-img" class="dice-img"></div>
+            <div class="pulled-dice"></div>
         </div>
 
-    </header>
-
-    <div class="playGround">
-        <div id="game-controller">
-            <button onclick="hitLuck()">Push your luck!</button>
-            <button onclick="Stay()">Stay!</button>
-
-
-        </div>
-        <div class="card-container" id="card-container"></div>
     </div>
     <script src="app.js"></script>
 </body>
