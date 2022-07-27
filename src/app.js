@@ -23,8 +23,10 @@ let dices = 0;
 let pulled = [];
 
 function pullDice() {
+
   // létrehozom a képet és elérési helyét 
   let imgDice = document.createElement("img");
+  let imgPulled = document.createElement("img");
   imgDice.setAttribute("id", "diceID");
   let card = "";
 
@@ -38,19 +40,19 @@ function pullDice() {
       dices += 1;
       green -= 1;
       card = colors[n] + "-" + g[k];
-      pulled = card;
+      pulled.push(card);
     }
-    else if (colors[n] == "Y" && y != 0) {
+    else if (colors[n] == "Y" && yellow != 0) {
       dices += 1;
       yellow -= 1;
       card = colors[n] + "-" + y[k];
-      pulled = card;
+      pulled.push(card);
     }
     else if (colors[n] == "R" && red != 0) {
       dices += 1;
       red -= 1;
       card = colors[n] + "-" + r[k];
-      pulled = card;
+      pulled.push(card);
     }
     else {
       console.log("valami hiba");
@@ -62,25 +64,33 @@ function pullDice() {
   }
 
   imgDice.src = "../img/dices/" + card + ".jpg";
-
+  imgPulled.src = "../img/dices/" + card + ".jpg";
   const parent = document.getElementById("dice-img");
+  const parent2 = document.getElementById("pulled-dice");
+  parent2.appendChild(imgPulled);
   parent.appendChild(imgDice);
 
-  console.log(green);
-  console.log(yellow);
-  console.log(red);
-  console.log("a kockák száma " + dices);
+  console.log("Green: " + green + " , Yellow: " + yellow + " , Red: " + red);
+  // console.log("a kockák száma " + dices);
 }
 
 function pushLuck() {
   pullDice();
-  // ha lenne üres img akkor ez letörlni
-  let err = "http://127.0.0.1:5500/img/dices/.jpg";
-  let e = document.getElementById("diceID").src;
+  console.log(pulled);
 
-  if (e == err) {
+  // a pulled array betöltődik pulled dice div-be
+  let imgDice = document.createElement("img");
+  imgDice.setAttribute("id", "pulledDiceID");
+  let lastItem = pulled[pulled.length - 1];
+
+
+  // ha a kép nem létezik, de megjelenik egy üres img
+  const parent = document.getElementById("dice-img");
+  let imgTags = parent.getElementsByTagName("img").length;
+  if (dices == 0 && imgTags == 1) {
     removeDice();
-  } else {
+  }
+  else {
     return;
   }
 }
@@ -88,19 +98,10 @@ function pushLuck() {
 function removeDice() {
   // kitörlöm a kockákat a tábláról
   const parentElement = document.querySelector("#dice-img");
-  // let allChildren = parentElement.querySelectorAll(":scope > img");
-  let allChildren = parentElement.querySelectorAll(" img");
-
+  let allChildren = parentElement.querySelectorAll("img");
   // végigmegyek az összes képen
   allChildren.forEach((item) => item.parentNode.removeChild(item));
 
   // lenullázom a kockák számát a táblán
   dices = 0;
-}
-
-function updateHTML(elmId, value) {
-  var elem = document.getElementById(elmId);
-  if (typeof elem !== 'undefined' && elem !== null) {
-    elem.src = value;
-  }
 }
