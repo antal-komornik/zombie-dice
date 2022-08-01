@@ -43,24 +43,26 @@ button{
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height:80px;
-  
+  height:90px;
+
 }
 
-img{
-  background-color: bisque;
+#diceID{
   width: 50px;
   height: 50px;
 }
 
 .pulled-dice{
-  display: inline;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
-  height: 30px;
-  background-color: rgba(255, 0, 0, 0.3);
+  height: 60px;
+  
 }
 
-.pulled-dice > img(
-  width:20px;
-  height:20px;
-)
+#dicePulled{
+  width: 30px;
+  height: 30px;
+  opacity: 0.6;
+}

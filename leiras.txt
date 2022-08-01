@@ -1,0 +1,22 @@
+.Van e a zsákban 13 kocka
+	.ha a lövéseim kevesebb mint 3
+		.kihúzok 3 at
+			létrehozom a kockákat
+			létrehozom a kockák tulajdonságait
+			.ha a kockák száma 3
+			.ha az egyik agy
+				a ponthoz adok 1 et
+			.különben ha az egyik löövés 
+				a lövéshez adok 1 et
+			.ha lábacska volt
+				megvizsgálom a kocka színét
+				újradobok a kockával
+			a kockáknak adok útvonalat
+		.különben törlöm a kockákat
+	.különben meghaltam,
+.ha nincs akkor a játéknak vége van
+
+tölrés();
+stay();
+elküldöm az adatokat a szervernek
+mindent nullázok
