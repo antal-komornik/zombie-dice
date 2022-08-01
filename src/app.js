@@ -207,3 +207,7 @@ function reRoll(runColor, n, k) {
     }
   }
 }
+
+function stay() {
+  console.log(score);
+}
