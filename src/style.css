@@ -60,9 +60,13 @@ button{
   height: 60px;
   
 }
-
 #dicePulled{
   width: 30px;
   height: 30px;
   opacity: 0.6;
+}
+
+#foot img{
+  width: 30px;
+  height: 30px;
 }
