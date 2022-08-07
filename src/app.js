@@ -1,3 +1,9 @@
+/*
+TODO
+a lábak ne kegyenek kihúzottak
+a lábak kezelése
+*/
+
 // randomizált tömb létrehozása
 let colors = [];
 generate(60, 40, 30, 4);
@@ -22,27 +28,30 @@ function pushLuck() {
   let n, k, card;
   if (shotted < 30) {
     endofdices: if (dicecount < 13) {
-
-      n = Math.floor(Math.random() * colors.length);
-      k = Math.floor(Math.random() * 6);
-      // console.log("szín : " + colors[n] + "\n szímbólum:\n" + "green: " + gSymbol[k] + "\n" + "yellow: " + ySymbol[k] + "\n" + "red: " + rSymbol[k]);
-      ifDiceNull(n);
-
+      if (defgen) {
+        n = Math.floor(Math.random() * colors.length);
+        k = Math.floor(Math.random() * 6);
+      }
       if (dices < 3) {
-        dicecount++;
+        ifDiceNull(n);
 
+        if (dicecount % 3 == 0) {
+          console.log("%c DICECOUNT % 3= 0 ", "background:black; color:white; font-size:20px");
+          if (runColor.length > 0) {
+            defgen = false;
+            reRoll(runColor, n, k);
+            for (let i = 0; i < runColor.length; i++) {
+              dicecount++;
+              dices++;
+            }
+            runColor = [];
+          }
+        }
         if (defgen) {
-          imgDice = document.createElement("img");
-          imgPulled = document.createElement("img");
-          imgDice.setAttribute("id", "diceID");
-          imgPulled.setAttribute("id", "dicePulled");
-
-          dices++;
           if (colors[n] == "G" && green != 0) {
             green--;
             card = colors[n] + "-" + gSymbol[k];
             pulled.push(card);
-
             if (gSymbol[k] == "B") {
               score++;
             } else if (gSymbol[k] == "S") {
@@ -50,13 +59,18 @@ function pushLuck() {
             } else {
               runColor.push("G");
               pulled.pop();
+              green++;
+              let imgFoot = document.createElement("img")
+              imgFoot.setAttribute("id", "foot");
+              imgFoot.src = "../img/dices/G-R.jpg";
+              const footparent = document.getElementById("foot");
+              footparent.appendChild(imgFoot);
             }
           }
           else if (colors[n] == "Y" && yellow != 0) {
             yellow--;
             card = colors[n] + "-" + ySymbol[k];
             pulled.push(card);
-
             if (ySymbol[k] == "B") {
               score++;
             } else if (ySymbol[k] == "S") {
@@ -64,13 +78,18 @@ function pushLuck() {
             } else {
               runColor.push("Y");
               pulled.pop();
+              yellow++;
+              let imgFoot = document.createElement("img")
+              imgFoot.setAttribute("id", "foot");
+              imgFoot.src = "../img/dices/Y-R.jpg";
+              const footparent = document.getElementById("foot");
+              footparent.appendChild(imgFoot);
             }
           }
           else if (colors[n] == "R" && red != 0) {
             red--;
             card = colors[n] + "-" + rSymbol[k];
             pulled.push(card);
-
             if (rSymbol[k] == "B") {
               score++;
             } else if (rSymbol[k] == "S") {
@@ -78,58 +97,70 @@ function pushLuck() {
             } else {
               runColor.push("R");
               pulled.pop();
+              red++;
+              let imgFoot = document.createElement("img")
+              imgFoot.setAttribute("id", "foot");
+              imgFoot.src = "../img/dices/R-R.jpg";
+              const footparent = document.getElementById("foot");
+              footparent.appendChild(imgFoot);
             }
           }
+          imgDice = document.createElement("img");
+          imgPulled = document.createElement("img");
+          imgDice.setAttribute("id", "diceID");
+          imgPulled.setAttribute("id", "dicePulled");
           imgDice.src = "../img/dices/" + card + ".jpg";
           imgPulled.src = imgDice.src;
+          dicecount++;
+          dices++;
         }
-
-
       } else {
+        // DICES == 3 VAGYIS KI LETT HÚZVA 3 KOCKA
         let location = "#dice-img";
         removeDice(location);
-        if (runColor.length != 0) {
-
-          defgen = false;
-          reRoll(runColor, n, k);
-          delete runColor;
-          console.log("van láb")
-        } else {
-          console.log("nincs láb");
-        }
+        dices = 0;
         return;
       }
-
     } else {
+      // DICECOUNT == 13 VAGYIS ELFOGYOTTAK A KOCKÁK
       let location = "#dice-img";
       removeDice(location);
       console.log("%c Vége, elfogytak a kockák", "background:grey; color:red");
       document.getElementById("error").innerHTML = "A kockák elfogytak";
-      return;
       break endofdices;
     }
   } else {
+    // SHOTTED == 3 VAGYIS MEGHALTÁL
     console.log("%c Meghaltál ", "background:grey; color:red");
     let location = "#dice-img";
     removeDice(location);
     document.getElementById("error").innerHTML = "You died";
   }
 
-
-
   const parent = document.getElementById("dice-img");
-  const parent2 = document.getElementById("pulled-dice");
-  const footparent = document.getElementById("foot");
   parent.appendChild(imgDice);
-  parent2.appendChild(imgPulled);
-  // footparent.appendChild(imgFoot);
+  undefinedcard: if (card == undefined) {
+    break undefinedcard;
+  } else {
+    if (card.split("-").pop() != "R") {
+      const parent2 = document.getElementById("pulled-dice");
+      parent2.appendChild(imgPulled);
+    }
+  }
   console.log("%c Green: " + green + " \n Yellow: " + yellow + "\n Red: " + red, "background:blue; font-size: 15px; color:white");
   console.log("score: " + score + "\n puska: " + shotted + "\n lábacska: " + runColor);
   console.log(pulled);
   console.log("A kockák száma: " + dices);
+  console.log("dicecount: " + dicecount);
+
+
+
 }
 
-
+function stay() {
+  savedScore = score;
+  document.getElementById("brains").innerHTML = savedScore;
+}
 
 function removeDice(location) {
   // kitörlöm a kockákat a tábláról
@@ -148,17 +179,19 @@ function ifDiceNull(n) {
       if (colors[i] === "G" && green == 0) {
         colors.splice(i, 1);
         i--;
+        console.log("%c A zöld elfogyott", "background:grey; color:green");
       }
       else if (colors[i] === "Y" && yellow == 0) {
         colors.splice(i, 1);
         i--;
+        console.log("%c A sárga elfogyott", "background:grey; color:yellow");
       }
       else if (colors[i] === "R" && red == 0) {
         colors.splice(i, 1);
         i--;
+        console.log("%c A piros elfogyott", "background:grey; color:red");
       }
     }
-    console.log("%c Elfogyott valami", "background:grey");
     console.log(colors);
     n = Math.floor(Math.random() * colors.length);
   }
@@ -194,50 +227,77 @@ function shuffle(array) {
 }
 
 function reRoll(runColor, n, k) {
-  console.log("reroll : " + runColor);
+  console.log("%c reroll : " + runColor, "background:aqua");
   for (let i = 0; i < runColor.length; i++) {
     let imgDice = document.createElement("img");
     imgDice.setAttribute("id", "diceID");
     if (runColor[i] == "G") {
-      dices++;
       colors[n] = "G";
       k = Math.floor(Math.random() * gSymbol.length);
       card = colors[n] + "-" + gSymbol[k];
-
-      // pushLuck(false, card);
-      console.log("g");
       console.log(card);
+      if (gSymbol[k] == "B") {
+        score++;
+      } else if (gSymbol[k] == "S") {
+        shotted++;
+      } else {
+        runColor.push("G");
+        pulled.pop();
+        green++;
+        let imgFoot = document.createElement("img")
+        imgFoot.setAttribute("id", "foot");
+        imgFoot.src = "../img/dices/G-R.jpg";
+        const footparent = document.getElementById("foot");
+        footparent.appendChild(imgFoot);
+      }
     }
     else if (runColor[i] == "Y") {
-      dices++;
       colors[n] = "Y";
       k = Math.floor(Math.random() * ySymbol.length);
       card = colors[n] + "-" + ySymbol[k];
-      // pushLuck(false, card);
-      console.log("y");
       console.log(card);
+      if (ySymbol[k] == "B") {
+        score++;
+      } else if (ySymbol[k] == "S") {
+        shotted++;
+      } else {
+        runColor.push("Y");
+        pulled.pop();
+        yellow++;
+        let imgFoot = document.createElement("img")
+        imgFoot.setAttribute("id", "foot");
+        imgFoot.src = "../img/dices/G-R.jpg";
+        const footparent = document.getElementById("foot");
+        footparent.appendChild(imgFoot);
+      }
     }
     else if (runColor[i] == "R") {
-      dices++;
       colors[n] = "R";
       k = Math.floor(Math.random() * rSymbol.length);
       card = colors[n] + "-" + rSymbol[k];
-      // pushLuck(false, card);
-      console.log("r");
       console.log(card);
+      if (rSymbol[k] == "B") {
+        score++;
+      } else if (rSymbol[k] == "S") {
+        shotted++;
+      } else {
+        runColor.push("R");
+        pulled.pop();
+        red++;
+        let imgFoot = document.createElement("img")
+        imgFoot.setAttribute("id", "foot");
+        imgFoot.src = "../img/dices/G-R.jpg";
+        const footparent = document.getElementById("foot");
+        footparent.appendChild(imgFoot);
+      }
     }
+
     imgDice.src = "../img/dices/" + card + ".jpg";
     const parent = document.getElementById("dice-img");
     parent.appendChild(imgDice);
   }
-  delete runColor;
   defgen = true;
-  console.log(defgen);
+  let location = "#foot";
+  removeDice(location);
 
 }
-
-function stay() {
-  savedScore = score;
-  document.getElementById("brains").innerHTML = savedScore;
-}
-
